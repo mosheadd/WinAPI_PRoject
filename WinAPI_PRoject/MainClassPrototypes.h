@@ -12,3 +12,4 @@ LRESULT CALLBACK MainClassProcedure(HWND hwnd, UINT msg, WPARAM wparam, LPARAM l
 WNDCLASS CreateWindowClass(HBRUSH color, HCURSOR cursor, HINSTANCE hInst, HICON icon, LPCWSTR name, WNDPROC procedure);
 
 void AddMainWindowMenu(HWND hwnd);
+void AddMainWindowWidgets(HWND hwnd);

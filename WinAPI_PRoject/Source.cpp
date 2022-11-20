@@ -52,7 +52,7 @@ LRESULT CALLBACK MainClassProcedure(HWND hwnd, UINT msg, WPARAM wparam, LPARAM l
 		switch (wparam)
 		{
 		case MenuExit:
-			int result = MessageBox(hwnd, L"пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ?", L"пїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ", MB_YESNO);
+			int result = MessageBox(hwnd, L"Вы действительно хотите выйти?", L"Выход из приложения", MB_YESNO);
 			switch (result)
 			{
 			case YES:
@@ -65,6 +65,7 @@ LRESULT CALLBACK MainClassProcedure(HWND hwnd, UINT msg, WPARAM wparam, LPARAM l
 		break;
 	case WM_CREATE:
 		AddMainWindowMenu(hwnd);
+		AddMainWindowWidgets(hwnd);
 		break;
 	case WM_DESTROY:
 		PostQuitMessage(0);
@@ -78,12 +79,16 @@ void AddMainWindowMenu(HWND hwnd)
 	HMENU root_menu = CreateMenu();
 	HMENU exit_app = CreateMenu();
 
-	AppendMenuW(exit_app, MF_STRING, MenuExit, L"пїЅпїЅпїЅпїЅпїЅ");
-	AppendMenuW(root_menu, MF_POPUP, (UINT_PTR)exit_app, L"пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ");
+	AppendMenuW(exit_app, MF_STRING, MenuExit, L"Выйти");
+	AppendMenuW(root_menu, MF_POPUP, (UINT_PTR)exit_app, L"Приложение");
 
 	SetMenu(hwnd, root_menu);
 } 
 
+void AddMainWindowWidgets(HWND hwnd)
 {
 
+	CreateWindowA("button", "Exit", WS_VISIBLE | WS_CHILD, (WIDTH - 80)/ 2, HEIGHT - 100, 80, 25, hwnd, NULL, NULL, NULL);
+
+}
 
