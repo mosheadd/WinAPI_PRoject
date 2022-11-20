@@ -53,4 +53,3 @@ LRESULT CALLBACK MainClassProcedure(HWND hwnd, UINT msg, WPARAM wparam, LPARAM l
 {
 
 
-	SetMenu(hwnd, root_menu);
