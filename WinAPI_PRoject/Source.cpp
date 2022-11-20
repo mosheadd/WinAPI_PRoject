@@ -2,6 +2,13 @@
 #include "MainClassPrototypes.h"
 
 
+enum MainWindowParams {
+	X = 300,
+	Y = 300,
+	HEIGHT = 500,
+	WIDTH = 500
+};
+
 int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR args, int ncmdshow)
 {
 
@@ -11,7 +18,7 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR args, int ncmdsho
 
 	MSG MainMessage = { 0 };
 
-	CreateWindow(MainClass.lpszClassName, L"Okno", WS_OVERLAPPEDWINDOW | WS_VISIBLE, 300, 300, 500, 500, NULL, NULL, NULL, NULL);
+	CreateWindow(MainClass.lpszClassName, L"Okno", WS_OVERLAPPEDWINDOW | WS_VISIBLE, X, Y, WIDTH, HEIGHT, NULL, NULL, NULL, NULL);
 
 	while (GetMessage(&MainMessage, NULL, NULL, NULL))
 	{
