@@ -1,5 +1,26 @@
 #include <Windows.h>
+#include "MainClassPrototypes.h"
 
+
+int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR args, int ncmdshow)
+{
+
+	WNDCLASS MainClass = CreateWindowClass((HBRUSH)COLOR_WINDOW, LoadCursor(NULL, IDC_ARROW), hInst, LoadIcon(NULL, IDI_QUESTION), L"MainWindow", MainClassProcedure);
+
+	if (!RegisterClass(&MainClass)) return -1;
+
+	MSG MainMessage = { 0 };
+
+	CreateWindow(MainClass.lpszClassName, L"Okno", WS_OVERLAPPEDWINDOW | WS_VISIBLE, 300, 300, 500, 500, NULL, NULL, NULL, NULL);
+
+	while (GetMessage(&MainMessage, NULL, NULL, NULL))
+	{
+		TranslateMessage(&MainMessage);
+		DispatchMessageW(&MainMessage);
+	}
+
+	return 0;
+}
 
 WNDCLASS CreateWindowClass(HBRUSH color, HCURSOR cursor, HINSTANCE hInst, HICON icon, LPCWSTR name, WNDPROC procedure)
 {
@@ -29,22 +50,7 @@ LRESULT CALLBACK MainClassProcedure(HWND hwnd, UINT msg, WPARAM wparam, LPARAM l
 	}
 }
 
-int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR args, int ncmdshow)
 {
 
-	WNDCLASS MainClass = CreateWindowClass((HBRUSH)COLOR_WINDOW, LoadCursor(NULL, IDC_ARROW), hInst, LoadIcon(NULL, IDI_QUESTION), L"MainWindow", MainClassProcedure);
 
-	if (!RegisterClass(&MainClass)) return -1;
-
-	MSG MainMessage = { 0 };
-
-	CreateWindow(MainClass.lpszClassName, L"Okno", WS_OVERLAPPEDWINDOW | WS_VISIBLE, 300, 300, 500, 500, NULL, NULL, NULL, NULL);
-
-	while (GetMessage(&MainMessage, NULL, NULL, NULL))
-	{
-		TranslateMessage(&MainMessage);
-		DispatchMessageW(&MainMessage);
-	}
-
-	return 0;
-}
+	SetMenu(hwnd, root_menu);
