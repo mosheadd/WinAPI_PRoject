@@ -1,5 +1,6 @@
 #include <Windows.h>
 #include "MainClassPrototypes.h"
+#include "resource.h"
 
 
 enum MainWindowParams {
@@ -12,7 +13,7 @@ enum MainWindowParams {
 int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR args, int ncmdshow)
 {
 
-	WNDCLASS MainClass = CreateWindowClass((HBRUSH)COLOR_WINDOW, LoadCursor(NULL, IDC_ARROW), hInst, LoadIcon(NULL, IDI_QUESTION), L"MainWindow", MainClassProcedure);
+	WNDCLASS MainClass = CreateWindowClass((HBRUSH)COLOR_WINDOW, LoadCursor(NULL, IDC_ARROW), hInst, LoadIcon(hInst, MAKEINTRESOURCE(IDI_ICON1)), L"MainWindow", MainClassProcedure);
 
 	if (!RegisterClass(&MainClass)) return -1;
 
