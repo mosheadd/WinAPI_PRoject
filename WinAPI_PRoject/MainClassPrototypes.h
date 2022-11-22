@@ -1,8 +1,9 @@
 #pragma once
 #include <Windows.h>
 
-#define MenuExit 0
+#define MenuExit 1
 #define OnMenuCLicked 1
+#define OnMouseClicked 2
 #define YES IDYES
 #define NO IDNO
 
@@ -13,3 +14,4 @@ WNDCLASS CreateWindowClass(HBRUSH color, HCURSOR cursor, HINSTANCE hInst, HICON 
 
 void AddMainWindowMenu(HWND hwnd);
 void AddMainWindowWidgets(HWND hwnd);
+void MouseWidgets(HWND hwnd);
