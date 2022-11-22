@@ -9,7 +9,8 @@
 #define NO IDNO
 
 //Виджеты
-
+HWND textSensitivity;
+HWND sensitivity;
 
 //Прототипы функций для главного окна
 LRESULT CALLBACK MainClassProcedure(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam);
@@ -19,3 +20,6 @@ WNDCLASS CreateWindowClass(HBRUSH color, HCURSOR cursor, HINSTANCE hInst, HICON 
 void AddMainWindowMenu(HWND hwnd);
 void AddMainWindowWidgets(HWND hwnd);
 void MouseWidgets(HWND hwnd);
+
+//Функция для тестов
+void testing(HWND hwnd);

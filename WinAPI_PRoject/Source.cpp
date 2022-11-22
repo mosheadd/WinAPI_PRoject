@@ -90,12 +90,19 @@ void AddMainWindowWidgets(HWND hwnd)
 
 	CreateWindowA("button", "Exit", WS_VISIBLE | WS_CHILD, (WIDTH - 80)/ 2, HEIGHT - 100, 80, 25, hwnd, (HMENU)MenuExit, NULL, NULL);
 	CreateWindowA("button", "Мышь", WS_VISIBLE | WS_CHILD, (WIDTH - 80)/ 2, 50, 80, 25, hwnd, (HMENU)OnMouseClicked, NULL, NULL);
-	CreateWindowA("static", "Чувствительность", WS_DISABLED | WS_CHILD, 100, 1500, 150, 25, hwnd, NULL, NULL, NULL);
-	CreateWindowA("edit", "", WS_DISABLED | WS_CHILD | ES_MULTILINE | WS_VSCROLL, 220, 150, 50, 25, hwnd, NULL, NULL, NULL);
+	textSensitivity = CreateWindowA("static", "Чувствительность", WS_CHILD, 100, 150, 150, 25, hwnd, NULL, NULL, NULL);
+	sensitivity = CreateWindowA("edit", "",  WS_CHILD | ES_MULTILINE | WS_VSCROLL, 220, 150, 50, 25, hwnd, NULL, NULL, NULL);
 
 }
 
 void MouseWidgets(HWND hwnd)
 {
-	
+	ShowWindow(textSensitivity, SW_SHOW);
+	ShowWindow(sensitivity, SW_SHOW);
+}
+
+void testing(HWND hwnd)
+{
+	ShowWindow(textSensitivity, SW_HIDE);
+	ShowWindow(sensitivity, SW_HIDE);
 }
