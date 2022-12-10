@@ -1,6 +1,10 @@
 #include <Windows.h>
+#include <Winuser.h>
+#include <stdio.h>
 #include "MainClassPrototypes.h"
 #include "resource.h"
+#include "string"
+#pragma comment(lib, "user32.lib") 
 
 
 enum MainWindowParams {
@@ -105,6 +109,16 @@ void AddMainWindowWidgets(HWND hwnd)
 
 void ShowMouseWidgets(HWND hwnd)
 {
+
+	int mouseInfo[3];
+
+	BOOL fResult = SystemParametersInfoW(SPI_GETMOUSE, 0, &mouseInfo, 0);
+	
+	wchar_t buffer[256];
+	wsprintfW(buffer, L"%d", mouseInfo[2]);
+
+	SetWindowText(sensitivity, buffer);
+
 	ShowWindow(textSensitivity, SW_SHOW);
 	ShowWindow(sensitivity, SW_SHOW);
 	ShowWindow(applySensitivity, SW_SHOW);
