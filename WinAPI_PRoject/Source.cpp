@@ -19,7 +19,7 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR args, int ncmdsho
 
 	MSG MainMessage = { 0 };
 
-	CreateWindow(MainClass.lpszClassName, L"Okno", WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX | WS_MAXIMIZEBOX | WS_VISIBLE, X, Y, WIDTH, HEIGHT, NULL, NULL, NULL, NULL);
+	CreateWindow(MainClass.lpszClassName, L"Okno", WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX | WS_VISIBLE, X, Y, WIDTH, HEIGHT, NULL, NULL, NULL, NULL);
 
 	while (GetMessage(&MainMessage, NULL, NULL, NULL))
 	{
