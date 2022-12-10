@@ -59,13 +59,13 @@ LRESULT CALLBACK MainClassProcedure(HWND hwnd, UINT msg, WPARAM wparam, LPARAM l
 			if(result == YES) PostQuitMessage(0);
 			break;
 		case OnMouseClicked:
-			MouseWidgets(hwnd);
+			ShowMouseWidgets(hwnd);
 			break;
 		case ApplySensitivity:
 
 			break;
 		case OnTestingClicked:
-			testing(hwnd);
+			
 			break;
 		}
 		break;
@@ -104,14 +104,14 @@ void AddMainWindowWidgets(HWND hwnd)
 
 }
 
-void MouseWidgets(HWND hwnd)
+void ShowMouseWidgets(HWND hwnd)
 {
 	ShowWindow(textSensitivity, SW_SHOW);
 	ShowWindow(sensitivity, SW_SHOW);
 	ShowWindow(applySensitivity, SW_SHOW);
 }
 
-void testing(HWND hwnd)
+void HideMouseWidgets(HWND hwnd)
 {
 	ShowWindow(textSensitivity, SW_HIDE);
 	ShowWindow(sensitivity, SW_HIDE);

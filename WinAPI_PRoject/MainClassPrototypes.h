@@ -24,7 +24,9 @@ WNDCLASS CreateWindowClass(HBRUSH color, HCURSOR cursor, HINSTANCE hInst, HICON 
 
 void AddMainWindowMenu(HWND hwnd);
 void AddMainWindowWidgets(HWND hwnd);
-void MouseWidgets(HWND hwnd);
+void ShowMouseWidgets(HWND hwnd);
+void HideMouseWidgets(HWND hwnd);
+
 
 //Функция для тестов
 void testing(HWND hwnd);
