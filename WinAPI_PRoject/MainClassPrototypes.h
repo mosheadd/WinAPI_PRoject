@@ -5,6 +5,7 @@
 #define MenuExit 1
 #define OnMenuCLicked 1
 #define OnMouseClicked 2
+#define OnTestingClicked 999
 #define YES IDYES
 #define NO IDNO
 

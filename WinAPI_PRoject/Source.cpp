@@ -61,6 +61,8 @@ LRESULT CALLBACK MainClassProcedure(HWND hwnd, UINT msg, WPARAM wparam, LPARAM l
 		case OnMouseClicked:
 			MouseWidgets(hwnd);
 			break;
+		case OnTestingClicked:
+			break;
 		}
 		break;
 	case WM_CREATE:
