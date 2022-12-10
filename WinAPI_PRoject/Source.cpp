@@ -61,7 +61,11 @@ LRESULT CALLBACK MainClassProcedure(HWND hwnd, UINT msg, WPARAM wparam, LPARAM l
 		case OnMouseClicked:
 			MouseWidgets(hwnd);
 			break;
+		case ApplySensitivity:
+
+			break;
 		case OnTestingClicked:
+			testing(hwnd);
 			break;
 		}
 		break;
@@ -94,6 +98,9 @@ void AddMainWindowWidgets(HWND hwnd)
 	CreateWindowA("button", "Мышь", WS_VISIBLE | WS_CHILD, (WIDTH - 80)/ 2, 50, 80, 25, hwnd, (HMENU)OnMouseClicked, NULL, NULL);
 	textSensitivity = CreateWindowA("static", "Чувствительность", WS_CHILD, 100, 150, 150, 25, hwnd, NULL, NULL, NULL);
 	sensitivity = CreateWindowA("edit", "",  WS_CHILD | ES_MULTILINE | WS_VSCROLL, 220, 150, 50, 25, hwnd, NULL, NULL, NULL);
+	applySensitivity = CreateWindowA("button", "Применить", WS_CHILD, 275, 150, 95, 25, hwnd, (HMENU)OnMouseClicked, NULL, NULL);
+
+	//CreateWindowA("button", "hide_mouse", WS_VISIBLE | WS_CHILD, (WIDTH - 80) / 2, 200, 80, 25, hwnd, (HMENU)OnTestingClicked, NULL, NULL);
 
 }
 
@@ -101,10 +108,12 @@ void MouseWidgets(HWND hwnd)
 {
 	ShowWindow(textSensitivity, SW_SHOW);
 	ShowWindow(sensitivity, SW_SHOW);
+	ShowWindow(applySensitivity, SW_SHOW);
 }
 
 void testing(HWND hwnd)
 {
 	ShowWindow(textSensitivity, SW_HIDE);
 	ShowWindow(sensitivity, SW_HIDE);
+	ShowWindow(applySensitivity, SW_HIDE);
 }

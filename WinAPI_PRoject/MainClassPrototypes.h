@@ -5,13 +5,17 @@
 #define MenuExit 1
 #define OnMenuCLicked 1
 #define OnMouseClicked 2
+#define ApplySensitivity 3
 #define OnTestingClicked 999
 #define YES IDYES
 #define NO IDNO
 
 //Виджеты
+
+//Мышь
 HWND textSensitivity;
 HWND sensitivity;
+HWND applySensitivity;
 
 //Прототипы функций для главного окна
 LRESULT CALLBACK MainClassProcedure(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam);
