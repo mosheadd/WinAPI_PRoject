@@ -27,7 +27,6 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR args, int ncmdsho
 		DispatchMessageW(&MainMessage);
 	}
 
-
 	return 0;
 }
 
