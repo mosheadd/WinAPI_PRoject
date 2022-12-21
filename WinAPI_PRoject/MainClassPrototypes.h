@@ -9,6 +9,7 @@
 #define OnTestingClicked 999
 #define YES IDYES
 #define NO IDNO
+#define IDC_STATIC_TEST 1000
 
 //Виджеты
 
@@ -16,6 +17,7 @@
 HWND textSensitivity;
 HWND sensitivity;
 HWND applySensitivity;
+HWND textTesting;
 
 //Прототипы функций для главного окна
 LRESULT CALLBACK MainClassProcedure(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam);

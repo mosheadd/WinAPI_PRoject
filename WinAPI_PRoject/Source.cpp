@@ -99,6 +99,7 @@ void AddMainWindowWidgets(HWND hwnd)
 
 	CreateWindowA("button", "Exit", WS_VISIBLE | WS_CHILD, (WIDTH - 80)/ 2, HEIGHT - 100, 80, 25, hwnd, (HMENU)MenuExit, NULL, NULL);
 	CreateWindowA("button", "Мышь", WS_VISIBLE | WS_CHILD, (WIDTH - 80)/ 2, 50, 80, 25, hwnd, (HMENU)OnMouseClicked, NULL, NULL);
+	textTesting = CreateWindowA("static", "a", WS_CHILD | WS_VISIBLE, 100, 180, 150, 25, hwnd, NULL, NULL, NULL);
 	textSensitivity = CreateWindowA("static", "Чувствительность", WS_CHILD, 100, 150, 150, 25, hwnd, NULL, NULL, NULL);
 	sensitivity = CreateWindowA("edit", "",  WS_CHILD | ES_MULTILINE | WS_VSCROLL, 220, 150, 50, 25, hwnd, NULL, NULL, NULL);
 	applySensitivity = CreateWindowA("button", "Применить", WS_CHILD, 275, 150, 95, 25, hwnd, (HMENU)OnMouseClicked, NULL, NULL);
@@ -115,9 +116,11 @@ void ShowMouseWidgets(HWND hwnd)
 	BOOL fResult = SystemParametersInfoW(SPI_GETMOUSE, 0, &mouseInfo, 0);
 	
 	wchar_t buffer[256];
-	wsprintfW(buffer, L"%d", mouseInfo[2]);
+	wsprintfW(buffer, L"%d", mouseInfo[1]);
 
-	SetWindowText(sensitivity, buffer);
+	SetWindowTextW(sensitivity, buffer);
+	SetWindowTextW(textTesting, buffer);
+	
 
 	ShowWindow(textSensitivity, SW_SHOW);
 	ShowWindow(sensitivity, SW_SHOW);
