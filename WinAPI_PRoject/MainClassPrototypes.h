@@ -5,7 +5,8 @@
 #define MenuExit 1
 #define OnMenuCLicked 1
 #define OnMouseClicked 2
-#define ApplySensitivity 3
+#define OnSetsClicked 3
+#define ApplySensitivity 4
 #define OnTestingClicked 999
 #define YES IDYES
 #define NO IDNO
@@ -28,6 +29,7 @@ WNDCLASS CreateWindowClass(HBRUSH color, HCURSOR cursor, HINSTANCE hInst, HICON 
 void AddMainWindowMenu(HWND hwnd);
 void AddMainWindowWidgets(HWND hwnd);
 void ShowMouseWidgets(HWND hwnd);
+void ShowSetsWidgets(HWND hwnd);
 void HideMouseWidgets(HWND hwnd);
 
 

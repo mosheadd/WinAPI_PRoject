@@ -67,6 +67,10 @@ LRESULT CALLBACK MainClassProcedure(HWND hwnd, UINT msg, WPARAM wparam, LPARAM l
 		case OnMouseClicked:
 			ShowMouseWidgets(hwnd);
 			break;
+		case OnSetsClicked:
+			HideMouseWidgets(hwnd);
+			ShowMouseWidgets(hwnd);
+			break;
 		case ApplySensitivity:
 
 			break;
