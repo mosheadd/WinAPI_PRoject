@@ -1,6 +1,7 @@
 #include <Windows.h>
 #include <Winuser.h>
 #include <stdio.h>
+#include <nlohmann/json.hpp>
 #include "MainClassPrototypes.h"
 #include "resource.h"
 #include "string"
@@ -17,13 +18,15 @@ enum MainWindowParams {
 int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR args, int ncmdshow)
 {
 
-	WNDCLASS MainClass = CreateWindowClass((HBRUSH)COLOR_WINDOW, LoadCursor(NULL, IDC_ARROW), hInst, LoadIcon(hInst, MAKEINTRESOURCE(IDI_ICON1)), L"MainWindow", MainClassProcedure);
+	WNDCLASS MainClass = CreateWindowClass((HBRUSH)COLOR_WINDOW, LoadCursor(NULL, IDC_ARROW), hInst, LoadIcon(hInst, MAKEINTRESOURCE(IDI_ICON1)),
+		L"MainWindow", MainClassProcedure);
 
 	if (!RegisterClass(&MainClass)) return -1;
 
 	MSG MainMessage = { 0 };
 
-	CreateWindow(MainClass.lpszClassName, L"Okno", WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX | WS_VISIBLE, X, Y, WIDTH, HEIGHT, NULL, NULL, NULL, NULL);
+	CreateWindow(MainClass.lpszClassName, L"Window", WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX | WS_VISIBLE, X, Y, WIDTH, HEIGHT, NULL,
+		NULL, NULL, NULL);
 
 	while (GetMessage(&MainMessage, NULL, NULL, NULL))
 	{
@@ -111,20 +114,20 @@ void AddMainWindowWidgets(HWND hwnd)
 void ShowMouseWidgets(HWND hwnd)
 {
 
-	int mouseInfo[3];
 
-	BOOL fResult = SystemParametersInfoW(SPI_GETMOUSE, 0, &mouseInfo, 0);
+	SystemParametersInfoW(SPI_SETMOUSEVANISH, 0, (PVOID)FALSE, 0);
 	
-	wchar_t buffer[256];
-	wsprintfW(buffer, L"%d", mouseInfo[1]);
+	/*wchar_t buffer[256];
+	wsprintfW(buffer, L"%d", mouseInfo[2]);*/
 
-	SetWindowTextW(sensitivity, buffer);
-	SetWindowTextW(textTesting, buffer);
-	
+
+	/*SetWindowTextW(sensitivity, buffer);
+	SetWindowTextW(textTesting, buffer);*/
 
 	ShowWindow(textSensitivity, SW_SHOW);
 	ShowWindow(sensitivity, SW_SHOW);
 	ShowWindow(applySensitivity, SW_SHOW);
+	ShowWindow(mouseVanishing, SW_SHOW);
 }
 
 void HideMouseWidgets(HWND hwnd)

@@ -18,6 +18,7 @@ HWND textSensitivity;
 HWND sensitivity;
 HWND applySensitivity;
 HWND textTesting;
+HWND mouseVanishing;
 
 //Прототипы функций для главного окна
 LRESULT CALLBACK MainClassProcedure(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam);
