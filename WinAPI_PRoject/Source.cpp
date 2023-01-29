@@ -65,6 +65,7 @@ LRESULT CALLBACK MainClassProcedure(HWND hwnd, UINT msg, WPARAM wparam, LPARAM l
 			if(result == YES) PostQuitMessage(0);
 			break;
 		case OnMouseClicked:
+			HideSetsWidgets(hwnd);
 			ShowMouseWidgets(hwnd);
 			break;
 		case OnSetsClicked:
@@ -150,4 +151,10 @@ void HideMouseWidgets(HWND hwnd)
 	ShowWindow(textSensitivity, SW_HIDE);
 	ShowWindow(sensitivity, SW_HIDE);
 	ShowWindow(applySensitivity, SW_HIDE);
+	ShowWindow(mouseVanishing, SW_HIDE);
+}
+
+void HideSetsWidgets(HWND hwnd)
+{
+	ShowWindow(createSet, SW_HIDE);
 }

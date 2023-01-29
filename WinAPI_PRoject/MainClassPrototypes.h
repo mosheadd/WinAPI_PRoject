@@ -35,6 +35,7 @@ void AddMainWindowWidgets(HWND hwnd);
 void ShowMouseWidgets(HWND hwnd);
 void ShowSetsWidgets(HWND hwnd);
 void HideMouseWidgets(HWND hwnd);
+void HideSetsWidgets(HWND hwnd);
 
 
 //Функция для тестов
