@@ -118,6 +118,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>C:\Users\rost1\source\repos\WinAPI_PRoject\Dependencies\json\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -132,6 +133,7 @@
   <ItemGroup>
     <ClInclude Include="MainClassPrototypes.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="sets.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="WinAPI_PRoject.rc" />

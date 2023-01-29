@@ -69,7 +69,7 @@ LRESULT CALLBACK MainClassProcedure(HWND hwnd, UINT msg, WPARAM wparam, LPARAM l
 			break;
 		case OnSetsClicked:
 			HideMouseWidgets(hwnd);
-			ShowMouseWidgets(hwnd);
+			ShowSetsWidgets(hwnd);
 			break;
 		case ApplySensitivity:
 
@@ -104,13 +104,19 @@ void AddMainWindowMenu(HWND hwnd)
 void AddMainWindowWidgets(HWND hwnd)
 {
 
+	int n = 2; //кол-во кнопок
+
 	CreateWindowA("button", "Exit", WS_VISIBLE | WS_CHILD, (WIDTH - 80)/ 2, HEIGHT - 100, 80, 25, hwnd, (HMENU)MenuExit, NULL, NULL);
-	CreateWindowA("button", "Мышь", WS_VISIBLE | WS_CHILD, (WIDTH - 80)/ 2, 50, 80, 25, hwnd, (HMENU)OnMouseClicked, NULL, NULL);
+	CreateWindowA("button", "Мышь", WS_VISIBLE | WS_CHILD, WIDTH / 2 - 80 * n / 2, 50, 80, 25, hwnd, (HMENU)OnMouseClicked, NULL, NULL);
+	CreateWindowA("button", "Наборы", WS_VISIBLE | WS_CHILD, WIDTH / 2 - 80 * n / 2 + 80, 50, 80, 25, hwnd, (HMENU)OnSetsClicked, NULL, NULL);
+
 	textTesting = CreateWindowA("static", "a", WS_CHILD | WS_VISIBLE, 100, 180, 150, 25, hwnd, NULL, NULL, NULL);
 	textSensitivity = CreateWindowA("static", "Чувствительность", WS_CHILD, 100, 150, 150, 25, hwnd, NULL, NULL, NULL);
 	sensitivity = CreateWindowA("edit", "",  WS_CHILD | ES_MULTILINE | WS_VSCROLL, 220, 150, 50, 25, hwnd, NULL, NULL, NULL);
 	applySensitivity = CreateWindowA("button", "Применить", WS_CHILD, 275, 150, 95, 25, hwnd, (HMENU)OnMouseClicked, NULL, NULL);
+	mouseVanishing = CreateWindowA("button", "Исчезновение мыши при вводе", WS_CHILD | BS_AUTOCHECKBOX, 10, 180, 235, 25, hwnd, NULL, NULL, NULL);
 
+	createSet = CreateWindowA("button", "Создать набор", WS_CHILD, 275, 150, 105, 25, hwnd, NULL, NULL, NULL);
 	//CreateWindowA("button", "hide_mouse", WS_VISIBLE | WS_CHILD, (WIDTH - 80) / 2, 200, 80, 25, hwnd, (HMENU)OnTestingClicked, NULL, NULL);
 
 }
@@ -132,6 +138,11 @@ void ShowMouseWidgets(HWND hwnd)
 	ShowWindow(sensitivity, SW_SHOW);
 	ShowWindow(applySensitivity, SW_SHOW);
 	ShowWindow(mouseVanishing, SW_SHOW);
+}
+
+void ShowSetsWidgets(HWND hwnd)
+{
+	ShowWindow(createSet, SW_SHOW);
 }
 
 void HideMouseWidgets(HWND hwnd)
