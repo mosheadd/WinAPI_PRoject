@@ -26,6 +26,12 @@ HWND mouseVanishing;
 
 //Наборы
 HWND createSet;
+HWND setOne;
+HWND setTwo;
+HWND setThree;
+HWND setOneDelete;
+HWND setTwoDelete;
+HWND setThreeDelete;
 
 
 //Прототипы функций для главного окна
