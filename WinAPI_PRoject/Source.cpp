@@ -112,6 +112,7 @@ void AddMainWindowWidgets(HWND hwnd)
 {
 
 	int n = 2; //кол-во кнопок
+	int max_sets_count = 3; //кол-во наборов
 
 	CreateWindowA("button", "Exit", WS_VISIBLE | WS_CHILD, (WIDTH - 80)/ 2, HEIGHT - 100, 80, 25, hwnd, (HMENU)MenuExit, NULL, NULL);
 	CreateWindowA("button", "Мышь", WS_VISIBLE | WS_CHILD, WIDTH / 2 - 80 * n / 2, 50, 80, 25, hwnd, (HMENU)OnMouseClicked, NULL, NULL);
@@ -124,9 +125,12 @@ void AddMainWindowWidgets(HWND hwnd)
 	mouseVanishing = CreateWindowA("button", "Исчезновение мыши при вводе", WS_CHILD | BS_AUTOCHECKBOX, 10, 180, 235, 25, hwnd, (HMENU)MouseVanishingCheck, NULL, NULL);
 
 	createSet = CreateWindowA("button", "Создать набор", WS_CHILD, WIDTH / 2 - 105, 150, 105, 25, hwnd, (HMENU)OnCreatSetClicked, NULL, NULL);
-	setOne = CreateWindowA("static", "Набор 1", WS_CHILD | WS_VISIBLE, 100, 180, 150, 25, hwnd, NULL, NULL, NULL);
-	setTwo = CreateWindowA("static", "Набор 1", WS_CHILD | WS_VISIBLE, 100, 180, 150, 25, hwnd, NULL, NULL, NULL);
-	setThree = CreateWindowA("static", "Набор 1", WS_CHILD | WS_VISIBLE, 100, 180, 150, 25, hwnd, NULL, NULL, NULL);
+	setOne = CreateWindowA("static", "Набор 1", WS_CHILD, 100, HEIGHT / 2 - (int)(30 * max_sets_count / 2), 60, 30, hwnd, NULL, NULL, NULL);
+	setTwo = CreateWindowA("static", "Набор 2", WS_CHILD, 100, HEIGHT / 2 - (int)(30 * max_sets_count / 2) + 30, 60, 30, hwnd, NULL, NULL, NULL);
+	setThree = CreateWindowA("static", "Набор 3", WS_CHILD, 100, HEIGHT / 2 - (int)(30 * max_sets_count / 2) + 60, 60, 30, hwnd, NULL, NULL, NULL);
+	setOneDelete = CreateWindowA("button", "Удалить", WS_CHILD, 165, HEIGHT / 2 - (int)(30 * max_sets_count / 2), 95, 30, hwnd, (HMENU)OnSetOneDelete, NULL, NULL);
+	setTwoDelete = CreateWindowA("button", "Удалить", WS_CHILD, 165, HEIGHT / 2 - (int)(30 * max_sets_count / 2) + 30, 95, 30, hwnd, (HMENU)OnSetTwoDelete, NULL, NULL);
+	setThreeDelete = CreateWindowA("button", "Удалить", WS_CHILD, 165, HEIGHT / 2 - (int)(30 * max_sets_count / 2) + 60, 95, 30, hwnd, (HMENU)OnSetThreeDelete, NULL, NULL);
 	//CreateWindowA("button", "hide_mouse", WS_VISIBLE | WS_CHILD, (WIDTH - 80) / 2, 200, 80, 25, hwnd, (HMENU)OnTestingClicked, NULL, NULL);
 
 }
@@ -153,6 +157,12 @@ void ShowMouseWidgets(HWND hwnd)
 void ShowSetsWidgets(HWND hwnd)
 {
 	ShowWindow(createSet, SW_SHOW);
+	ShowWindow(setOne, SW_SHOW);
+	ShowWindow(setTwo, SW_SHOW);
+	ShowWindow(setThree, SW_SHOW);
+	ShowWindow(setOneDelete, SW_SHOW);
+	ShowWindow(setTwoDelete, SW_SHOW);
+	ShowWindow(setThreeDelete, SW_SHOW);
 }
 
 void HideMouseWidgets(HWND hwnd)
@@ -161,11 +171,18 @@ void HideMouseWidgets(HWND hwnd)
 	ShowWindow(sensitivity, SW_HIDE);
 	ShowWindow(applySensitivity, SW_HIDE);
 	ShowWindow(mouseVanishing, SW_HIDE);
+
 }
 
 void HideSetsWidgets(HWND hwnd)
 {
 	ShowWindow(createSet, SW_HIDE);
+	ShowWindow(setOne, SW_HIDE);
+	ShowWindow(setTwo, SW_HIDE);
+	ShowWindow(setThree, SW_HIDE);
+	ShowWindow(setOneDelete, SW_HIDE);
+	ShowWindow(setTwoDelete, SW_HIDE);
+	ShowWindow(setThreeDelete, SW_HIDE);
 }
 
 void CreateSet(HWND hwnd)

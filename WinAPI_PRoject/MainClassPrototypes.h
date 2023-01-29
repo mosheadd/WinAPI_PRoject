@@ -8,7 +8,10 @@
 #define OnSetsClicked 3
 #define ApplySensitivity 4
 #define OnCreatSetClicked 5
-#define MouseVanishingCheck 10
+#define OnSetOneDelete 6
+#define OnSetTwoDelete 7
+#define OnSetThreeDelete 8
+#define MouseVanishingCheck 15
 #define OnTestingClicked 999
 #define YES IDYES
 #define NO IDNO
