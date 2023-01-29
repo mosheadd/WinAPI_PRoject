@@ -167,6 +167,5 @@ void CreateSet(HWND hwnd)
 {
 	Set set;
 	set.mouseVanishing = SendMessage(GetDlgItem(hwnd, MouseVanishingCheck), BM_GETCHECK, 0, 0);
-	if (set.mouseVanishing) SetWindowTextW(textTesting, L"TRUE");
-	else SetWindowTextW(textTesting, L"FALSE");
+	
 }
