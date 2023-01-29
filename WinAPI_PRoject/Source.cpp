@@ -2,6 +2,8 @@
 #include <Winuser.h>
 #include <stdio.h>
 #include <nlohmann/json.hpp>
+#include <fstream>
+#include <filesystem>
 #include "MainClassPrototypes.h"
 #include "resource.h"
 #include "sets.h"
@@ -167,5 +169,9 @@ void CreateSet(HWND hwnd)
 {
 	Set set;
 	set.mouseVanishing = SendMessage(GetDlgItem(hwnd, MouseVanishingCheck), BM_GETCHECK, 0, 0);
-	
+	nlohmann::json j{};
+	j["mouseVanishing"] = set.mouseVanishing;
+
+	std::ofstream file("set.json");
+	file << j;
 }

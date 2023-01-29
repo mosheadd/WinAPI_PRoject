@@ -14,6 +14,7 @@
 #define NO IDNO
 #define IDC_STATIC_TEST 1000
 
+
 //Виджеты
 
 //Мышь
