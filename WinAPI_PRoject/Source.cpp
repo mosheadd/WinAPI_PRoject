@@ -4,6 +4,7 @@
 #include <nlohmann/json.hpp>
 #include "MainClassPrototypes.h"
 #include "resource.h"
+#include "sets.h"
 #include "string"
 #pragma comment(lib, "user32.lib") 
 
@@ -75,6 +76,9 @@ LRESULT CALLBACK MainClassProcedure(HWND hwnd, UINT msg, WPARAM wparam, LPARAM l
 		case ApplySensitivity:
 
 			break;
+		case OnCreatSetClicked:
+			CreateSet(hwnd);
+			break;
 		case OnTestingClicked:
 			
 			break;
@@ -115,9 +119,9 @@ void AddMainWindowWidgets(HWND hwnd)
 	textSensitivity = CreateWindowA("static", "Чувствительность", WS_CHILD, 100, 150, 150, 25, hwnd, NULL, NULL, NULL);
 	sensitivity = CreateWindowA("edit", "",  WS_CHILD | ES_MULTILINE | WS_VSCROLL, 220, 150, 50, 25, hwnd, NULL, NULL, NULL);
 	applySensitivity = CreateWindowA("button", "Применить", WS_CHILD, 275, 150, 95, 25, hwnd, (HMENU)OnMouseClicked, NULL, NULL);
-	mouseVanishing = CreateWindowA("button", "Исчезновение мыши при вводе", WS_CHILD | BS_AUTOCHECKBOX, 10, 180, 235, 25, hwnd, NULL, NULL, NULL);
+	mouseVanishing = CreateWindowA("button", "Исчезновение мыши при вводе", WS_CHILD | BS_AUTOCHECKBOX, 10, 180, 235, 25, hwnd, (HMENU)MouseVanishingCheck, NULL, NULL);
 
-	createSet = CreateWindowA("button", "Создать набор", WS_CHILD, 275, 150, 105, 25, hwnd, NULL, NULL, NULL);
+	createSet = CreateWindowA("button", "Создать набор", WS_CHILD, 275, 150, 105, 25, hwnd, (HMENU)OnCreatSetClicked, NULL, NULL);
 	//CreateWindowA("button", "hide_mouse", WS_VISIBLE | WS_CHILD, (WIDTH - 80) / 2, 200, 80, 25, hwnd, (HMENU)OnTestingClicked, NULL, NULL);
 
 }
@@ -157,4 +161,12 @@ void HideMouseWidgets(HWND hwnd)
 void HideSetsWidgets(HWND hwnd)
 {
 	ShowWindow(createSet, SW_HIDE);
+}
+
+void CreateSet(HWND hwnd)
+{
+	Set set;
+	set.mouseVanishing = SendMessage(GetDlgItem(hwnd, MouseVanishingCheck), BM_GETCHECK, 0, 0);
+	if (set.mouseVanishing) SetWindowTextW(textTesting, L"TRUE");
+	else SetWindowTextW(textTesting, L"FALSE");
 }

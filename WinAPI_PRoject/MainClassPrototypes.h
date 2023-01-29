@@ -7,6 +7,8 @@
 #define OnMouseClicked 2
 #define OnSetsClicked 3
 #define ApplySensitivity 4
+#define OnCreatSetClicked 5
+#define MouseVanishingCheck 10
 #define OnTestingClicked 999
 #define YES IDYES
 #define NO IDNO
@@ -37,6 +39,8 @@ void ShowSetsWidgets(HWND hwnd);
 void HideMouseWidgets(HWND hwnd);
 void HideSetsWidgets(HWND hwnd);
 
+//Остальные функции
+void CreateSet(HWND hwnd);
 
 //Функция для тестов
 void testing(HWND hwnd);
