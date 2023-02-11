@@ -36,6 +36,8 @@ HWND setOneDelete;
 HWND setTwoDelete;
 HWND setThreeDelete;
 
+char buffer[256];
+
 
 //Прототипы функций для главного окна
 LRESULT CALLBACK MainClassProcedure(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam);
@@ -48,6 +50,7 @@ void ShowMouseWidgets(HWND hwnd);
 void ShowSetsWidgets(HWND hwnd);
 void HideMouseWidgets(HWND hwnd);
 void HideSetsWidgets(HWND hwnd);
+void SetMouseSpeed(HWND hwnd);
 
 //Остальные функции
 void CreateSet(HWND hwnd);

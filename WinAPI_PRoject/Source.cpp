@@ -76,7 +76,7 @@ LRESULT CALLBACK MainClassProcedure(HWND hwnd, UINT msg, WPARAM wparam, LPARAM l
 			ShowSetsWidgets(hwnd);
 			break;
 		case ApplySensitivity:
-
+			SetMouseSpeed(hwnd);
 			break;
 		case OnCreatSetClicked:
 			CreateSet(hwnd);
@@ -120,8 +120,8 @@ void AddMainWindowWidgets(HWND hwnd)
 
 	textTesting = CreateWindowA("static", "a", WS_CHILD | WS_VISIBLE, 100, 180, 150, 25, hwnd, NULL, NULL, NULL);
 	textSensitivity = CreateWindowA("static", "Чувствительность", WS_CHILD, 100, 150, 150, 25, hwnd, NULL, NULL, NULL);
-	sensitivity = CreateWindowA("edit", "",  WS_CHILD | ES_MULTILINE | WS_VSCROLL, 220, 150, 50, 25, hwnd, NULL, NULL, NULL);
-	applySensitivity = CreateWindowA("button", "Применить", WS_CHILD, 275, 150, 95, 25, hwnd, (HMENU)OnMouseClicked, NULL, NULL);
+	sensitivity = CreateWindowA("edit", "",  WS_CHILD | ES_MULTILINE, 220, 150, 50, 25, hwnd, NULL, NULL, NULL);
+	applySensitivity = CreateWindowA("button", "Применить", WS_CHILD, 275, 150, 95, 25, hwnd, (HMENU)ApplySensitivity, NULL, NULL);
 	mouseVanishing = CreateWindowA("button", "Исчезновение мыши при вводе", WS_CHILD | BS_AUTOCHECKBOX, 10, 180, 235, 25, hwnd, (HMENU)MouseVanishingCheck, NULL, NULL);
 
 	createSet = CreateWindowA("button", "Создать набор", WS_CHILD, WIDTH / 2 - 105, 150, 105, 25, hwnd, (HMENU)OnCreatSetClicked, NULL, NULL);
@@ -139,15 +139,21 @@ void ShowMouseWidgets(HWND hwnd)
 {
 
 
-	SystemParametersInfoW(SPI_SETMOUSEVANISH, 0, (PVOID)FALSE, 0);
-	
-	/*wchar_t buffer[256];
-	wsprintfW(buffer, L"%d", mouseInfo[2]);*/
+	//SystemParametersInfoW(SPI_SETMOUSEVANISH, 0, (PVOID)FALSE, 0);
+	//unsigned int speed = 5;
+	//SystemParametersInfo(SPI_SETMOUSESPEED,
+	//	0,
+	//	(void*)speed,
+	//	SPIF_SENDCHANGE);
 
-
-	/*SetWindowTextW(sensitivity, buffer);
-	SetWindowTextW(textTesting, buffer);*/
-
+	unsigned int spd;
+	BOOL res = SystemParametersInfo(SPI_GETMOUSESPEED,
+		0,
+		&spd,
+		0);
+	wchar_t buffer2[256];
+	wsprintfW(buffer2, L"%d", spd);
+	SetWindowTextW(sensitivity, buffer2);
 	ShowWindow(textSensitivity, SW_SHOW);
 	ShowWindow(sensitivity, SW_SHOW);
 	ShowWindow(applySensitivity, SW_SHOW);
@@ -172,6 +178,25 @@ void HideMouseWidgets(HWND hwnd)
 	ShowWindow(applySensitivity, SW_HIDE);
 	ShowWindow(mouseVanishing, SW_HIDE);
 
+}
+
+void SetMouseSpeed(HWND hwnd)
+{
+	GetWindowTextA(sensitivity, buffer, 256);
+	SetWindowTextW(textTesting, (LPCWSTR)buffer);
+	int newMouseSpeed = buffer[1] - '0';
+	if (!buffer[1]) newMouseSpeed = buffer[0] - '0';
+	else
+	{
+		std::string strBuffer = "  ";
+		strBuffer[0] = buffer[0];
+		strBuffer[1] = buffer[1];
+		newMouseSpeed = std::stoi(strBuffer);
+	}
+	SystemParametersInfo(SPI_SETMOUSESPEED,
+		0,
+		(void*)newMouseSpeed,
+		SPIF_SENDCHANGE);
 }
 
 void HideSetsWidgets(HWND hwnd)
