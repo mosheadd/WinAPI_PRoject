@@ -183,7 +183,6 @@ void HideMouseWidgets(HWND hwnd)
 void SetMouseSpeed(HWND hwnd)
 {
 	GetWindowTextA(sensitivity, buffer, 256);
-	SetWindowTextW(textTesting, (LPCWSTR)buffer);
 	int newMouseSpeed = buffer[1] - '0';
 	if (!buffer[1]) newMouseSpeed = buffer[0] - '0';
 	else
@@ -214,8 +213,18 @@ void CreateSet(HWND hwnd)
 {
 	Set set;
 	set.mouseVanishing = SendMessage(GetDlgItem(hwnd, MouseVanishingCheck), BM_GETCHECK, 0, 0);
+	GetWindowTextA(sensitivity, buffer, 256);
+	if (!buffer[1]) set.mouseSpeed = buffer[0] - '0';
+	else
+	{
+		std::string strBuffer = "  ";
+		strBuffer[0] = buffer[0];
+		strBuffer[1] = buffer[1];
+		set.mouseSpeed = std::stoi(strBuffer);
+	}
 	nlohmann::json j{};
 	j["mouseVanishing"] = set.mouseVanishing;
+	j["mouseMouseSpeed"] = set.mouseVanishing;
 
 	std::ofstream file("set.json");
 	file << j;
