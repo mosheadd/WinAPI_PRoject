@@ -83,6 +83,15 @@ LRESULT CALLBACK MainClassProcedure(HWND hwnd, UINT msg, WPARAM wparam, LPARAM l
 		case OnCreatSetClicked:
 			CreateSet(hwnd);
 			break;
+		case OnSetOneDelete:
+			DeleteSet(1);
+			break;
+		case OnSetTwoDelete:
+			DeleteSet(2);
+			break;
+		case OnSetThreeDelete:
+			DeleteSet(3);
+			break;
 		case OnTestingClicked:
 			
 			break;
@@ -267,7 +276,42 @@ void LoadSets()
 
 }
 
-void DeleteSet()
+void DeleteSet(int set)
 {
-
+	switch (set)
+	{
+	case 1:
+		GetWindowTextA(setOne, buffer, 256);
+		strBuffer = "";
+		int bufferI = 0;
+		while (buffer[bufferI])
+		{
+			strBuffer += buffer[bufferI];
+			bufferI++;
+		}
+		std::filesystem::remove("./sets/" + strBuffer + ".json");
+		break;
+	case 2:
+		GetWindowTextA(setTwo, buffer, 256);
+		strBuffer = "";
+		int bufferI = 0;
+		while (buffer[bufferI])
+		{
+			strBuffer += buffer[bufferI];
+			bufferI++;
+		}
+		std::filesystem::remove("./sets/" + strBuffer + ".json");
+		break;
+	case 3:
+		GetWindowTextA(setThree, buffer, 256);
+		strBuffer = "";
+		int bufferI = 0;
+		while (buffer[bufferI])
+		{
+			strBuffer += buffer[bufferI];
+			bufferI++;
+		}
+		std::filesystem::remove("./sets/" + strBuffer + ".json");
+		break;
+	}
 }

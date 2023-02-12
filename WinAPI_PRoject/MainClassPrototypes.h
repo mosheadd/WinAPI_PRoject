@@ -64,7 +64,7 @@ void SetMouseSpeed();
 //Остальные функции
 void CreateSet(HWND hwnd);
 void LoadSets();
-void DeleteSet();
+void DeleteSet(int set);
 
 //Функция для тестов
 void testing(HWND hwnd);
