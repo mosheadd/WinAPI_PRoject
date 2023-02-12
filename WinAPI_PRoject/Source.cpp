@@ -128,12 +128,12 @@ void AddMainWindowWidgets(HWND hwnd)
 
 	createSet = CreateWindowA("button", "Создать набор", WS_CHILD, WIDTH / 2 - 105, 150, 105, 25, hwnd, (HMENU)OnCreatSetClicked, NULL, NULL);
 	nameSet = CreateWindowA("edit", "", WS_CHILD | ES_MULTILINE, WIDTH / 2 + 5, 150, 150, 25, hwnd, NULL, NULL, NULL);
-	setOne = CreateWindowA("static", "Набор 1", WS_CHILD, 100, HEIGHT / 2 - (int)(30 * max_sets_count / 2), 60, 30, hwnd, NULL, NULL, NULL);
-	setTwo = CreateWindowA("static", "Набор 2", WS_CHILD, 100, HEIGHT / 2 - (int)(30 * max_sets_count / 2) + 30, 60, 30, hwnd, NULL, NULL, NULL);
-	setThree = CreateWindowA("static", "Набор 3", WS_CHILD, 100, HEIGHT / 2 - (int)(30 * max_sets_count / 2) + 60, 60, 30, hwnd, NULL, NULL, NULL);
-	setOneDelete = CreateWindowA("button", "Удалить", WS_CHILD, 165, HEIGHT / 2 - (int)(30 * max_sets_count / 2), 95, 30, hwnd, (HMENU)OnSetOneDelete, NULL, NULL);
-	setTwoDelete = CreateWindowA("button", "Удалить", WS_CHILD, 165, HEIGHT / 2 - (int)(30 * max_sets_count / 2) + 30, 95, 30, hwnd, (HMENU)OnSetTwoDelete, NULL, NULL);
-	setThreeDelete = CreateWindowA("button", "Удалить", WS_CHILD, 165, HEIGHT / 2 - (int)(30 * max_sets_count / 2) + 60, 95, 30, hwnd, (HMENU)OnSetThreeDelete, NULL, NULL);
+	setOne = CreateWindowA("static", "", WS_CHILD, 100, HEIGHT / 2 - (int)(30 * max_sets_count / 2), 100, 30, hwnd, NULL, NULL, NULL);
+	setTwo = CreateWindowA("static", "", WS_CHILD, 100, HEIGHT / 2 - (int)(30 * max_sets_count / 2) + 30, 100, 30, hwnd, NULL, NULL, NULL);
+	setThree = CreateWindowA("static", "", WS_CHILD, 100, HEIGHT / 2 - (int)(30 * max_sets_count / 2) + 60, 100, 30, hwnd, NULL, NULL, NULL);
+	setOneDelete = CreateWindowA("button", "Удалить", WS_CHILD, 200, HEIGHT / 2 - (int)(30 * max_sets_count / 2), 95, 30, hwnd, (HMENU)OnSetOneDelete, NULL, NULL);
+	setTwoDelete = CreateWindowA("button", "Удалить", WS_CHILD, 200, HEIGHT / 2 - (int)(30 * max_sets_count / 2) + 30, 95, 30, hwnd, (HMENU)OnSetTwoDelete, NULL, NULL);
+	setThreeDelete = CreateWindowA("button", "Удалить", WS_CHILD, 200, HEIGHT / 2 - (int)(30 * max_sets_count / 2) + 60, 95, 30, hwnd, (HMENU)OnSetThreeDelete, NULL, NULL);
 	//CreateWindowA("button", "hide_mouse", WS_VISIBLE | WS_CHILD, (WIDTH - 80) / 2, 200, 80, 25, hwnd, (HMENU)OnTestingClicked, NULL, NULL);
 
 }
@@ -244,21 +244,21 @@ void LoadSets(HWND hwnd)
 	for (const auto& entry : std::filesystem::directory_iterator(setsPath)) fileNames.push_back(entry.path().generic_string());
 	if (fileNames.size() >= 1)
 	{
-		strToWstrBuffer = std::wstring(fileNames[0].begin(), fileNames[0].end());
+		strToWstrBuffer = std::wstring(fileNames[0].begin() + 7, fileNames[0].end() - 5);
 		SetWindowTextW(setOne, strToWstrBuffer.c_str());
 		ShowWindow(setOne, SW_SHOW);
 		ShowWindow(setOneDelete, SW_SHOW);
 	}
 	if (fileNames.size() >= 2)
 	{
-		strToWstrBuffer = std::wstring(fileNames[1].begin(), fileNames[1].end());
+		strToWstrBuffer = std::wstring(fileNames[1].begin() + 7, fileNames[1].end() - 5);
 		SetWindowTextW(setTwo, strToWstrBuffer.c_str());
 		ShowWindow(setTwo, SW_SHOW);
 		ShowWindow(setTwoDelete, SW_SHOW);
 	}
 	if (fileNames.size() == 3)
 	{
-		strToWstrBuffer = std::wstring(fileNames[2].begin(), fileNames[2].end());
+		strToWstrBuffer = std::wstring(fileNames[2].begin(), fileNames[2].end() - 5);
 		SetWindowTextW(setThree, strToWstrBuffer.c_str());
 		ShowWindow(setThree, SW_SHOW);
 		ShowWindow(setThreeDelete, SW_SHOW);
