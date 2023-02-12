@@ -37,7 +37,7 @@ HWND setOneDelete;
 HWND setTwoDelete;
 HWND setThreeDelete;
 
-//переменные и константы
+//буфферы и константы
 
 char buffer[256];
 
