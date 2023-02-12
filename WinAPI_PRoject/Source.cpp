@@ -69,16 +69,16 @@ LRESULT CALLBACK MainClassProcedure(HWND hwnd, UINT msg, WPARAM wparam, LPARAM l
 			if(result == YES) PostQuitMessage(0);
 			break;
 		case OnMouseClicked:
-			HideSetsWidgets(hwnd);
-			ShowMouseWidgets(hwnd);
+			HideSetsWidgets();
+			ShowMouseWidgets();
 			break;
 		case OnSetsClicked:
-			HideMouseWidgets(hwnd);
-			ShowSetsWidgets(hwnd);
-			LoadSets(hwnd);
+			HideMouseWidgets();
+			ShowSetsWidgets();
+			LoadSets();
 			break;
 		case ApplySensitivity:
-			SetMouseSpeed(hwnd);
+			SetMouseSpeed();
 			break;
 		case OnCreatSetClicked:
 			CreateSet(hwnd);
@@ -138,7 +138,7 @@ void AddMainWindowWidgets(HWND hwnd)
 
 }
 
-void ShowMouseWidgets(HWND hwnd)
+void ShowMouseWidgets()
 {
 
 
@@ -163,13 +163,13 @@ void ShowMouseWidgets(HWND hwnd)
 	ShowWindow(mouseVanishing, SW_SHOW);
 }
 
-void ShowSetsWidgets(HWND hwnd)
+void ShowSetsWidgets()
 {
 	ShowWindow(createSet, SW_SHOW);
 	ShowWindow(nameSet, SW_SHOW);
 }
 
-void HideMouseWidgets(HWND hwnd)
+void HideMouseWidgets()
 {
 	ShowWindow(textSensitivity, SW_HIDE);
 	ShowWindow(sensitivity, SW_HIDE);
@@ -177,7 +177,7 @@ void HideMouseWidgets(HWND hwnd)
 	ShowWindow(mouseVanishing, SW_HIDE);
 }
 
-void SetMouseSpeed(HWND hwnd)
+void SetMouseSpeed()
 {
 	GetWindowTextA(sensitivity, buffer, 256);
 	int newMouseSpeed = buffer[1] - '0';
@@ -195,7 +195,7 @@ void SetMouseSpeed(HWND hwnd)
 		SPIF_SENDCHANGE);
 }
 
-void HideSetsWidgets(HWND hwnd)
+void HideSetsWidgets()
 {
 	ShowWindow(createSet, SW_HIDE);
 	ShowWindow(nameSet, SW_HIDE);
@@ -238,7 +238,7 @@ void CreateSet(HWND hwnd)
 	file.close();
 }
 
-void LoadSets(HWND hwnd)
+void LoadSets()
 {
 	std::vector<std::string> fileNames;
 	for (const auto& entry : std::filesystem::directory_iterator(setsPath)) fileNames.push_back(entry.path().generic_string());
@@ -264,5 +264,10 @@ void LoadSets(HWND hwnd)
 		ShowWindow(setThreeDelete, SW_SHOW);
 	}
 	strToWstrBuffer = L"";
+
+}
+
+void DeleteSet()
+{
 
 }

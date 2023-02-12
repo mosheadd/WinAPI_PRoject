@@ -55,15 +55,16 @@ WNDCLASS CreateWindowClass(HBRUSH color, HCURSOR cursor, HINSTANCE hInst, HICON 
 
 void AddMainWindowMenu(HWND hwnd);
 void AddMainWindowWidgets(HWND hwnd);
-void ShowMouseWidgets(HWND hwnd);
-void ShowSetsWidgets(HWND hwnd);
-void HideMouseWidgets(HWND hwnd);
-void HideSetsWidgets(HWND hwnd);
-void SetMouseSpeed(HWND hwnd);
+void ShowMouseWidgets();
+void ShowSetsWidgets();
+void HideMouseWidgets();
+void HideSetsWidgets();
+void SetMouseSpeed();
 
 //Остальные функции
 void CreateSet(HWND hwnd);
-void LoadSets(HWND hwnd);
+void LoadSets();
+void DeleteSet();
 
 //Функция для тестов
 void testing(HWND hwnd);
