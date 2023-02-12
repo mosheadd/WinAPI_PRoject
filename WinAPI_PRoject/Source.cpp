@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <nlohmann/json.hpp>
 #include <fstream>
+#include <iostream>
 #include <filesystem>
 #include "MainClassPrototypes.h"
 #include "resource.h"
@@ -74,6 +75,7 @@ LRESULT CALLBACK MainClassProcedure(HWND hwnd, UINT msg, WPARAM wparam, LPARAM l
 		case OnSetsClicked:
 			HideMouseWidgets(hwnd);
 			ShowSetsWidgets(hwnd);
+			LoadSets(hwnd);
 			break;
 		case ApplySensitivity:
 			SetMouseSpeed(hwnd);
@@ -125,6 +127,7 @@ void AddMainWindowWidgets(HWND hwnd)
 	mouseVanishing = CreateWindowA("button", "Исчезновение мыши при вводе", WS_CHILD | BS_AUTOCHECKBOX, 10, 180, 235, 25, hwnd, (HMENU)MouseVanishingCheck, NULL, NULL);
 
 	createSet = CreateWindowA("button", "Создать набор", WS_CHILD, WIDTH / 2 - 105, 150, 105, 25, hwnd, (HMENU)OnCreatSetClicked, NULL, NULL);
+	nameSet = CreateWindowA("edit", "", WS_CHILD | ES_MULTILINE, WIDTH / 2 + 5, 150, 150, 25, hwnd, NULL, NULL, NULL);
 	setOne = CreateWindowA("static", "Набор 1", WS_CHILD, 100, HEIGHT / 2 - (int)(30 * max_sets_count / 2), 60, 30, hwnd, NULL, NULL, NULL);
 	setTwo = CreateWindowA("static", "Набор 2", WS_CHILD, 100, HEIGHT / 2 - (int)(30 * max_sets_count / 2) + 30, 60, 30, hwnd, NULL, NULL, NULL);
 	setThree = CreateWindowA("static", "Набор 3", WS_CHILD, 100, HEIGHT / 2 - (int)(30 * max_sets_count / 2) + 60, 60, 30, hwnd, NULL, NULL, NULL);
@@ -163,12 +166,7 @@ void ShowMouseWidgets(HWND hwnd)
 void ShowSetsWidgets(HWND hwnd)
 {
 	ShowWindow(createSet, SW_SHOW);
-	ShowWindow(setOne, SW_SHOW);
-	ShowWindow(setTwo, SW_SHOW);
-	ShowWindow(setThree, SW_SHOW);
-	ShowWindow(setOneDelete, SW_SHOW);
-	ShowWindow(setTwoDelete, SW_SHOW);
-	ShowWindow(setThreeDelete, SW_SHOW);
+	ShowWindow(nameSet, SW_SHOW);
 }
 
 void HideMouseWidgets(HWND hwnd)
@@ -177,7 +175,6 @@ void HideMouseWidgets(HWND hwnd)
 	ShowWindow(sensitivity, SW_HIDE);
 	ShowWindow(applySensitivity, SW_HIDE);
 	ShowWindow(mouseVanishing, SW_HIDE);
-
 }
 
 void SetMouseSpeed(HWND hwnd)
@@ -187,7 +184,7 @@ void SetMouseSpeed(HWND hwnd)
 	if (!buffer[1]) newMouseSpeed = buffer[0] - '0';
 	else
 	{
-		std::string strBuffer = "  ";
+		strBuffer = "  ";
 		strBuffer[0] = buffer[0];
 		strBuffer[1] = buffer[1];
 		newMouseSpeed = std::stoi(strBuffer);
@@ -201,6 +198,7 @@ void SetMouseSpeed(HWND hwnd)
 void HideSetsWidgets(HWND hwnd)
 {
 	ShowWindow(createSet, SW_HIDE);
+	ShowWindow(nameSet, SW_HIDE);
 	ShowWindow(setOne, SW_HIDE);
 	ShowWindow(setTwo, SW_HIDE);
 	ShowWindow(setThree, SW_HIDE);
@@ -217,15 +215,54 @@ void CreateSet(HWND hwnd)
 	if (!buffer[1]) set.mouseSpeed = buffer[0] - '0';
 	else
 	{
-		std::string strBuffer = "  ";
+		strBuffer = "  ";
 		strBuffer[0] = buffer[0];
 		strBuffer[1] = buffer[1];
 		set.mouseSpeed = std::stoi(strBuffer);
 	}
 	nlohmann::json j{};
 	j["mouseVanishing"] = set.mouseVanishing;
-	j["mouseMouseSpeed"] = set.mouseVanishing;
+	j["mouseSpeed"] = set.mouseSpeed;
 
-	std::ofstream file("set.json");
+	GetWindowTextA(nameSet, buffer, 256);
+	int bufferI = 0;
+	strBuffer = "";
+	while (buffer[bufferI])
+	{
+		strBuffer += buffer[bufferI];
+		bufferI++;
+	}
+
+	std::ofstream file("./sets/" + strBuffer + ".json");
 	file << j;
+	file.close();
+}
+
+void LoadSets(HWND hwnd)
+{
+	std::vector<std::string> fileNames;
+	for (const auto& entry : std::filesystem::directory_iterator(setsPath)) fileNames.push_back(entry.path().generic_string());
+	if (fileNames.size() >= 1)
+	{
+		strToWstrBuffer = std::wstring(fileNames[0].begin(), fileNames[0].end());
+		SetWindowTextW(setOne, strToWstrBuffer.c_str());
+		ShowWindow(setOne, SW_SHOW);
+		ShowWindow(setOneDelete, SW_SHOW);
+	}
+	if (fileNames.size() >= 2)
+	{
+		strToWstrBuffer = std::wstring(fileNames[1].begin(), fileNames[1].end());
+		SetWindowTextW(setTwo, strToWstrBuffer.c_str());
+		ShowWindow(setTwo, SW_SHOW);
+		ShowWindow(setTwoDelete, SW_SHOW);
+	}
+	if (fileNames.size() == 3)
+	{
+		strToWstrBuffer = std::wstring(fileNames[2].begin(), fileNames[2].end());
+		SetWindowTextW(setThree, strToWstrBuffer.c_str());
+		ShowWindow(setThree, SW_SHOW);
+		ShowWindow(setThreeDelete, SW_SHOW);
+	}
+	strToWstrBuffer = L"";
+
 }

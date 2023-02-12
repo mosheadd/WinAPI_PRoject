@@ -29,6 +29,7 @@ HWND mouseVanishing;
 
 //Наборы
 HWND createSet;
+HWND nameSet;
 HWND setOne;
 HWND setTwo;
 HWND setThree;
@@ -36,7 +37,14 @@ HWND setOneDelete;
 HWND setTwoDelete;
 HWND setThreeDelete;
 
+//переменные и константы
+
 char buffer[256];
+
+std::string strBuffer;
+std::wstring strToWstrBuffer;
+
+const std::string setsPath = "./sets";
 
 
 //Прототипы функций для главного окна
@@ -54,6 +62,7 @@ void SetMouseSpeed(HWND hwnd);
 
 //Остальные функции
 void CreateSet(HWND hwnd);
+void LoadSets(HWND hwnd);
 
 //Функция для тестов
 void testing(HWND hwnd);
