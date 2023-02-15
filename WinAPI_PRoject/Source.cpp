@@ -59,6 +59,7 @@ WNDCLASS CreateWindowClass(HBRUSH color, HCURSOR cursor, HINSTANCE hInst, HICON 
 LRESULT CALLBACK MainClassProcedure(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)
 {
 	int result = 0;
+	int newMouseSpeed;
 	switch (msg)
 	{
 	case WM_COMMAND: 
@@ -78,7 +79,17 @@ LRESULT CALLBACK MainClassProcedure(HWND hwnd, UINT msg, WPARAM wparam, LPARAM l
 			LoadSets();
 			break;
 		case ApplySensitivity:
-			SetMouseSpeed();
+			GetWindowTextA(sensitivity, buffer, 256);
+			newMouseSpeed = buffer[1] - '0';
+			if (!buffer[1]) newMouseSpeed = buffer[0] - '0';
+			else
+			{
+				strBuffer = "  ";
+				strBuffer[0] = buffer[0];
+				strBuffer[1] = buffer[1];
+				newMouseSpeed = std::stoi(strBuffer);
+			}
+			SetMouseSpeed(newMouseSpeed);
 			break;
 		case OnCreatSetClicked:
 			CreateSet(hwnd);
@@ -91,6 +102,15 @@ LRESULT CALLBACK MainClassProcedure(HWND hwnd, UINT msg, WPARAM wparam, LPARAM l
 			break;
 		case OnSetThreeDelete:
 			DeleteSet(3);
+			break;
+		case OnSetOneApply:
+			ApplySet(1);
+			break;
+		case OnSetTwoApply:
+			ApplySet(2);
+			break;
+		case OnSetThreeApply:
+			ApplySet(3);
 			break;
 		case OnTestingClicked:
 			
@@ -140,9 +160,9 @@ void AddMainWindowWidgets(HWND hwnd)
 	setOne = CreateWindowA("static", "", WS_CHILD, 100, HEIGHT / 2 - (int)(30 * max_sets_count / 2), 100, 30, hwnd, NULL, NULL, NULL);
 	setTwo = CreateWindowA("static", "", WS_CHILD, 100, HEIGHT / 2 - (int)(30 * max_sets_count / 2) + 30, 100, 30, hwnd, NULL, NULL, NULL);
 	setThree = CreateWindowA("static", "", WS_CHILD, 100, HEIGHT / 2 - (int)(30 * max_sets_count / 2) + 60, 100, 30, hwnd, NULL, NULL, NULL);
-	setOneApply = CreateWindowA("button", "Применить", WS_CHILD, 200, HEIGHT / 2 - (int)(30 * max_sets_count / 2), 95, 30, hwnd, (HMENU)OnSetOneDelete, NULL, NULL);
-	setTwoApply = CreateWindowA("button", "Применить", WS_CHILD, 200, HEIGHT / 2 - (int)(30 * max_sets_count / 2) + 30, 95, 30, hwnd, (HMENU)OnSetTwoDelete, NULL, NULL);
-	setThreeApply = CreateWindowA("button", "Применить", WS_CHILD, 200, HEIGHT / 2 - (int)(30 * max_sets_count / 2) + 60, 95, 30, hwnd, (HMENU)OnSetThreeDelete, NULL, NULL);
+	setOneApply = CreateWindowA("button", "Применить", WS_CHILD, 200, HEIGHT / 2 - (int)(30 * max_sets_count / 2), 95, 30, hwnd, (HMENU)OnSetOneApply, NULL, NULL);
+	setTwoApply = CreateWindowA("button", "Применить", WS_CHILD, 200, HEIGHT / 2 - (int)(30 * max_sets_count / 2) + 30, 95, 30, hwnd, (HMENU)OnSetTwoApply, NULL, NULL);
+	setThreeApply = CreateWindowA("button", "Применить", WS_CHILD, 200, HEIGHT / 2 - (int)(30 * max_sets_count / 2) + 60, 95, 30, hwnd, (HMENU)OnSetThreeApply, NULL, NULL);
 	setOneDelete = CreateWindowA("button", "Удалить", WS_CHILD, 300, HEIGHT / 2 - (int)(30 * max_sets_count / 2), 95, 30, hwnd, (HMENU)OnSetOneDelete, NULL, NULL);
 	setTwoDelete = CreateWindowA("button", "Удалить", WS_CHILD, 300, HEIGHT / 2 - (int)(30 * max_sets_count / 2) + 30, 95, 30, hwnd, (HMENU)OnSetTwoDelete, NULL, NULL);
 	setThreeDelete = CreateWindowA("button", "Удалить", WS_CHILD, 300, HEIGHT / 2 - (int)(30 * max_sets_count / 2) + 60, 95, 30, hwnd, (HMENU)OnSetThreeDelete, NULL, NULL);
@@ -180,21 +200,11 @@ void HideMouseWidgets()
 	ShowWindow(mouseVanishing, SW_HIDE);
 }
 
-void SetMouseSpeed()
+void SetMouseSpeed(int speed)
 {
-	GetWindowTextA(sensitivity, buffer, 256);
-	int newMouseSpeed = buffer[1] - '0';
-	if (!buffer[1]) newMouseSpeed = buffer[0] - '0';
-	else
-	{
-		strBuffer = "  ";
-		strBuffer[0] = buffer[0];
-		strBuffer[1] = buffer[1];
-		newMouseSpeed = std::stoi(strBuffer);
-	}
 	SystemParametersInfo(SPI_SETMOUSESPEED,
 		0,
-		(void*)newMouseSpeed,
+		(void*)speed,
 		SPIF_SENDCHANGE);
 }
 
@@ -245,6 +255,36 @@ void CreateSet(HWND hwnd)
 	LoadSets();
 }
 
+void ApplySet(int set)
+{
+	std::string path = "./sets/";
+	int bufferI = 0;
+	switch (set)
+	{
+	case 1:
+		GetWindowTextA(setOne, buffer, 256);
+		break;
+	case 2:
+		GetWindowTextA(setTwo, buffer, 256);
+		break;
+	case 3:
+		GetWindowTextA(setThree, buffer, 256);
+		break;
+	}
+	while (buffer[bufferI])
+	{
+		path += buffer[bufferI];
+		bufferI++;
+	}
+	path += ".json";
+	strToWstrBuffer = std::wstring(path.begin(), path.end());
+	SetWindowTextW(textTesting, strToWstrBuffer.c_str());
+	strToWstrBuffer = L"";
+	std::ifstream ifs(path);
+	nlohmann::json jsondata = nlohmann::json::parse(ifs);
+	SetMouseSpeed(jsondata["mouseSpeed"]);
+}
+
 void LoadSets()
 {
 	std::vector<std::string> fileNames;
@@ -285,37 +325,24 @@ void DeleteSet(int set)
 	case 1:
 		SetWindowTextW(textTesting, L"1");
 		GetWindowTextA(setOne, buffer, 256);
-		strBuffer = "";
-		while (buffer[bufferI])
-		{
-			strBuffer += buffer[bufferI];
-			bufferI++;
-		}
-		std::filesystem::remove("./sets/" + strBuffer + ".json");
 		break;
 	case 2:
 		SetWindowTextW(textTesting, L"2");
 		GetWindowTextA(setTwo, buffer, 256);
-		strBuffer = "";
-		while (buffer[bufferI])
-		{
-			strBuffer += buffer[bufferI];
-			bufferI++;
-		}
-		std::filesystem::remove("./sets/" + strBuffer + ".json");
 		break;
 	case 3:
 		SetWindowTextW(textTesting, L"3");
 		GetWindowTextA(setThree, buffer, 256);
-		strBuffer = "";
-		while (buffer[bufferI])
-		{
-			strBuffer += buffer[bufferI];
-			bufferI++;
-		}
-		std::filesystem::remove("./sets/" + strBuffer + ".json");
 		break;
 	}
+	strBuffer = "";
+	while (buffer[bufferI])
+	{
+		strBuffer += buffer[bufferI];
+		bufferI++;
+	}
+	std::filesystem::remove("./sets/" + strBuffer + ".json");
+	strBuffer = "";
 	HideSetsWidgets();
 	ShowSetsWidgets();
 	LoadSets();

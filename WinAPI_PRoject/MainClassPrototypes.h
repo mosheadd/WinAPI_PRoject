@@ -11,6 +11,9 @@
 #define OnSetOneDelete 6
 #define OnSetTwoDelete 7
 #define OnSetThreeDelete 8
+#define OnSetOneApply 9
+#define OnSetTwoApply 10
+#define OnSetThreeApply 11
 #define MouseVanishingCheck 15
 #define OnTestingClicked 999
 #define YES IDYES
@@ -62,10 +65,11 @@ void ShowMouseWidgets();
 void ShowSetsWidgets();
 void HideMouseWidgets();
 void HideSetsWidgets();
-void SetMouseSpeed();
+void SetMouseSpeed(int speed);
 
 //Остальные функции
 void CreateSet(HWND hwnd);
+void ApplySet(int set);
 void LoadSets();
 void DeleteSet(int set);
 
