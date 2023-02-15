@@ -149,15 +149,6 @@ void AddMainWindowWidgets(HWND hwnd)
 
 void ShowMouseWidgets()
 {
-
-
-	//SystemParametersInfoW(SPI_SETMOUSEVANISH, 0, (PVOID)FALSE, 0);
-	//unsigned int speed = 5;
-	//SystemParametersInfo(SPI_SETMOUSESPEED,
-	//	0,
-	//	(void*)speed,
-	//	SPIF_SENDCHANGE);
-
 	unsigned int spd;
 	BOOL res = SystemParametersInfo(SPI_GETMOUSESPEED,
 		0,
@@ -278,12 +269,13 @@ void LoadSets()
 
 void DeleteSet(int set)
 {
+	int bufferI = 0;
 	switch (set)
 	{
 	case 1:
+		SetWindowTextW(textTesting, L"1");
 		GetWindowTextA(setOne, buffer, 256);
 		strBuffer = "";
-		int bufferI = 0;
 		while (buffer[bufferI])
 		{
 			strBuffer += buffer[bufferI];
@@ -292,9 +284,9 @@ void DeleteSet(int set)
 		std::filesystem::remove("./sets/" + strBuffer + ".json");
 		break;
 	case 2:
+		SetWindowTextW(textTesting, L"2");
 		GetWindowTextA(setTwo, buffer, 256);
 		strBuffer = "";
-		int bufferI = 0;
 		while (buffer[bufferI])
 		{
 			strBuffer += buffer[bufferI];
@@ -303,9 +295,9 @@ void DeleteSet(int set)
 		std::filesystem::remove("./sets/" + strBuffer + ".json");
 		break;
 	case 3:
+		SetWindowTextW(textTesting, L"3");
 		GetWindowTextA(setThree, buffer, 256);
 		strBuffer = "";
-		int bufferI = 0;
 		while (buffer[bufferI])
 		{
 			strBuffer += buffer[bufferI];
@@ -314,4 +306,7 @@ void DeleteSet(int set)
 		std::filesystem::remove("./sets/" + strBuffer + ".json");
 		break;
 	}
+	HideSetsWidgets();
+	ShowSetsWidgets();
+	LoadSets();
 }
