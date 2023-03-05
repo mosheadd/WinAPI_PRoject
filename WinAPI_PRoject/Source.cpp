@@ -13,7 +13,7 @@
 
 
 enum MainWindowParams {
-	X = 300,
+	X = 630,
 	Y = 300,
 	HEIGHT = 500,
 	WIDTH = 500
@@ -80,16 +80,50 @@ LRESULT CALLBACK MainClassProcedure(HWND hwnd, UINT msg, WPARAM wparam, LPARAM l
 			break;
 		case ApplySensitivity:
 			GetWindowTextA(sensitivity, buffer, 256);
-			newMouseSpeed = buffer[1] - '0';
-			if (!buffer[1]) newMouseSpeed = buffer[0] - '0';
+			if (!buffer[1])
+			{
+				newMouseSpeed = buffer[0] - '0';
+				try
+				{
+					if (!std::isdigit(buffer[0])) throw 1;
+					SetMouseSpeed(newMouseSpeed);
+				}
+				catch (int error)
+				{
+					switch (error)
+					{
+					case 1:
+						MessageBox(NULL, L"Значение должно быть натуральным числом.", L"Ошибка", MB_ICONERROR | MB_OK);
+						break;
+					}
+				}
+			}
 			else
 			{
 				strBuffer = "  ";
 				strBuffer[0] = buffer[0];
 				strBuffer[1] = buffer[1];
-				newMouseSpeed = std::stoi(strBuffer);
+				try
+				{
+					for (auto c : strBuffer) if (!std::isdigit(c)) throw 1;
+					if (std::stoi(strBuffer) > 20 || std::stoi(strBuffer) <= 0) throw 2;
+					newMouseSpeed = std::stoi(strBuffer);
+					SetMouseSpeed(newMouseSpeed);
+				}
+				catch (int error)
+				{
+					switch (error)
+					{
+					case 1:
+						MessageBox(NULL, L"Значение должно быть натуральным числом.", L"Ошибка", MB_ICONERROR | MB_OK);
+						break;
+					case 2:
+						MessageBox(NULL, L"Значение должно быть в пределах от 1 до 20.", L"Ошибка", MB_ICONERROR | MB_OK);
+						break;
+					}
+				}
 			}
-			SetMouseSpeed(newMouseSpeed);
+			strBuffer = "";
 			break;
 		case OnCreatSetClicked:
 			CreateSet(hwnd);
@@ -149,11 +183,11 @@ void AddMainWindowWidgets(HWND hwnd)
 	CreateWindowA("button", "Мышь", WS_VISIBLE | WS_CHILD, WIDTH / 2 - 80 * n / 2, 50, 80, 25, hwnd, (HMENU)OnMouseClicked, NULL, NULL);
 	CreateWindowA("button", "Наборы", WS_VISIBLE | WS_CHILD, WIDTH / 2 - 80 * n / 2 + 80, 50, 80, 25, hwnd, (HMENU)OnSetsClicked, NULL, NULL);
 
-	textTesting = CreateWindowA("static", "a", WS_CHILD | WS_VISIBLE, 100, 180, 150, 25, hwnd, NULL, NULL, NULL);
+	textTesting = CreateWindowA("static", "a", WS_CHILD, 100, 180, 150, 25, hwnd, NULL, NULL, NULL);
 	textSensitivity = CreateWindowA("static", "Чувствительность", WS_CHILD, 100, 150, 150, 25, hwnd, NULL, NULL, NULL);
 	sensitivity = CreateWindowA("edit", "",  WS_CHILD | ES_MULTILINE, 220, 150, 50, 25, hwnd, NULL, NULL, NULL);
 	applySensitivity = CreateWindowA("button", "Применить", WS_CHILD, 275, 150, 95, 25, hwnd, (HMENU)ApplySensitivity, NULL, NULL);
-	mouseVanishing = CreateWindowA("button", "Исчезновение мыши при вводе", WS_CHILD | BS_AUTOCHECKBOX, 10, 180, 235, 25, hwnd, (HMENU)MouseVanishingCheck, NULL, NULL);
+	mouseVanishing = CreateWindowA("button", "Исчезновение мыши при вводе", WS_CHILD | BS_AUTOCHECKBOX, 30, 180, 235, 25, hwnd, (HMENU)MouseVanishingCheck, NULL, NULL);
 
 	createSet = CreateWindowA("button", "Создать набор", WS_CHILD, WIDTH / 2 - 105, 150, 105, 25, hwnd, (HMENU)OnCreatSetClicked, NULL, NULL);
 	nameSet = CreateWindowA("edit", "", WS_CHILD | ES_MULTILINE, WIDTH / 2 + 5, 150, 150, 25, hwnd, NULL, NULL, NULL);
